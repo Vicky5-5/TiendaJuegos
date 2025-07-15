@@ -12,13 +12,14 @@ var origenesPermitidos = builder.Configuration.GetValue<string>("OrigenesPermiti
 // HABILITAR CORS para Angular
 builder.Services.AddCors(options =>
 {
-    options.AddDefaultPolicy(policy =>
+    options.AddPolicy("AllowAngularDevClient", policy =>
     {
         policy.WithOrigins(origenesPermitidos)
               .AllowAnyHeader()
               .AllowAnyMethod();
     });
 });
+
 
 // REGISTRAR TU SERVICIO (esto evita el error 500)
 builder.Services.AddScoped<IVideojuegoService, VideojuegosService>();
@@ -33,13 +34,13 @@ if (app.Environment.IsDevelopment())
 
 if (!app.Environment.IsDevelopment())
 {
-    app.UseHttpsRedirection();
+    app.UseHttpsRedirection(); //Redirección segura
 }
-
+app.UseRouting();
 // Activar CORS
-app.UseCors(); // Usa la política por defecto
+app.UseCors("AllowAngularDevClient"); 
 
-app.UseAuthorization();
-app.MapControllers();
+app.UseAuthorization(); // Habilita la autorización despues de CORS
+app.MapControllers(); //Mapea endpoints de los controladores
 
 app.Run();
