@@ -30,55 +30,55 @@ namespace Logica.Managers
                 return usuario;
             }
         }
-        public static Videojuego GuardarVideojuegos(int id, string titulo, string genero, string plataforma, int PEGI)
+     public static Videojuego GuardarVideojuegos(int id, string titulo, string genero, string plataforma, int PEGI)
+{
+    using (var db = new Conexion())
+    {
+
+        var videojuego = db.Videojuegos.FirstOrDefault(a => a.idVideojuego == id);
+        //Productos productos = new Productos();
+        //var producto = productos.ObtenerProducto(id);
+        //Si el id es distinto de entramos en editar
+        if (db.Videojuegos.Any(u => u.Titulo == titulo && u.idVideojuego != id))
         {
-            using (var db = new Conexion())
-            {
-
-                var videojuego = db.Videojuegos.FirstOrDefault(a => a.idVideojuego == id);
-                //Productos productos = new Productos();
-                //var producto = productos.ObtenerProducto(id);
-                //Si el id es distinto de entramos en editar
-                if (db.Videojuegos.Any(u => u.Titulo == titulo && u.idVideojuego!= id))
-                {
-                    throw new Exception("El videojuego ya está en la base de datos");
-                }
-
-                if (videojuego != null)
-                {
-                    videojuego.idVideojuego = id;
-                    videojuego.Titulo = titulo;
-                    videojuego.Genero = genero;
-                    videojuego.Plataforma = plataforma;
-                    videojuego.PEGI = PEGI;
-                    db.SaveChanges();
-                    return videojuego;
-                }
-
-                //Esto es para crear un nuevo producto
-                //Crear una prueba de error de, si existe el email, que lo eche para atrás la creación
-                videojuego = new Videojuego()
-                {
-
-                    idVideojuego = id,
-                    Titulo = titulo,
-                    Genero = genero,
-                    PEGI = PEGI
-                };
-                try
-                {
-                    db.Videojuegos.Add(videojuego);
-
-                    db.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Error al guardar el videojuego: {ex.Message}");
-                }
-                return videojuego;
-            }
-
+            throw new Exception("El videojuego ya está en la base de datos");
         }
+
+        if (videojuego != null)
+        {
+            videojuego.Titulo = titulo;
+            videojuego.Genero = genero;
+            videojuego.Plataforma = plataforma;
+            videojuego.PEGI = PEGI;
+            db.SaveChanges();
+            return videojuego;
+        }
+
+        //Esto es para crear un nuevo producto
+        //Crear una prueba de error de, si existe el email, que lo eche para atrás la creación
+        videojuego = new Videojuego()
+        {
+
+            idVideojuego = id,
+            Titulo = titulo,
+            Genero = genero,
+            Plataforma=plataforma,
+            PEGI = PEGI
+        };
+        try
+        {
+            db.Videojuegos.Add(videojuego);
+
+            db.SaveChanges();
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error al guardar el videojuego: {ex.Message}");
+        }
+        return videojuego;
+    }
+
+}
         public static List<Videojuego> ListarVideojuegos()
         {
             using (var cn = new Conexion())
