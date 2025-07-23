@@ -39,14 +39,13 @@ namespace Logica.Managers
                 //Productos productos = new Productos();
                 //var producto = productos.ObtenerProducto(id);
                 //Si el id es distinto de entramos en editar
-                if (db.Videojuegos.Any(u => u.Titulo == titulo && u.idVideojuego!= id))
+                if (db.Videojuegos.Any(u => u.Titulo == titulo && u.idVideojuego != id))
                 {
                     throw new Exception("El videojuego ya está en la base de datos");
                 }
 
                 if (videojuego != null)
                 {
-                    videojuego.idVideojuego = id;
                     videojuego.Titulo = titulo;
                     videojuego.Genero = genero;
                     videojuego.Plataforma = plataforma;
@@ -63,6 +62,7 @@ namespace Logica.Managers
                     idVideojuego = id,
                     Titulo = titulo,
                     Genero = genero,
+                    Plataforma = plataforma,
                     PEGI = PEGI
                 };
                 try
