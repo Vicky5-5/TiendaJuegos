@@ -34,12 +34,12 @@ namespace Logica.Managers
         {
             using (var db = new Conexion())
             {
-                var videojuego = db.Videojuegos.FirstOrDefault(a => a.idVideojuego == id);
-
                 if (db.Videojuegos.Any(u => u.Titulo == titulo && u.idVideojuego != id))
                 {
                     throw new Exception("El videojuego ya está en la base de datos");
                 }
+
+                var videojuego = db.Videojuegos.FirstOrDefault(a => a.idVideojuego == id);
 
                 if (videojuego != null)
                 {
@@ -61,20 +61,14 @@ namespace Logica.Managers
                     Plataforma = plataforma,
                     PEGI = PEGI
                 };
-                // Prueba git
-                try
-                {
-                    db.Videojuegos.Add(videojuego);
-                    db.SaveChanges();
-                }
-                catch (Exception ex)
-                {
-                    throw new Exception($"Error al guardar el videojuego: {ex.Message}");
-                }
+
+                db.Videojuegos.Add(videojuego);
+                db.SaveChanges();
 
                 return videojuego;
             }
         }
+
 
 
         public static List<Videojuego> ListarVideojuegos()
