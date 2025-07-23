@@ -61,7 +61,7 @@ namespace Logica.Managers
                     Plataforma = plataforma,
                     PEGI = PEGI
                 };
-
+                // Prueba git
                 try
                 {
                     db.Videojuegos.Add(videojuego);
