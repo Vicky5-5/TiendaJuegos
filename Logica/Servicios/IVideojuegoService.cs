@@ -7,7 +7,7 @@ namespace TiendaJuegos.Servicios
         IEnumerable<Videojuego> GetAll();
         Videojuego? GetById(int id);
         Videojuego Add(Videojuego juego);
-        bool Update(int id, Videojuego juego);
+        Videojuego Update(int id, Videojuego juego);
         bool Delete(int id);
     }
 }

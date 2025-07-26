@@ -8,13 +8,15 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var origenesPermitidos = builder.Configuration.GetValue<string>("OrigenesPermitidos")!.Split(",");
+var origenesPermitidos = builder.Configuration
+    .GetSection("OrigenesPermitidos")
+    .Get<string[]>();
 // HABILITAR CORS para Angular
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAngularDevClient", policy =>
     {
-        policy.WithOrigins(origenesPermitidos)
+        policy.WithOrigins(origenesPermitidos!)
               .AllowAnyHeader()
               .AllowAnyMethod();
     });

@@ -34,21 +34,23 @@ namespace TiendaJuegos.Controllers
         }
 
         [HttpPost]
-        public ActionResult<VideojuegosViewModel> Create([FromBody] VideojuegosViewModel vm)
+        public ActionResult<VideojuegosViewModel> Create(VideojuegosViewModel vm)
 
         {
             var nuevo = _service.Add(vm.ToModel());
             return CreatedAtAction(nameof(GetById), new { id = nuevo.idVideojuego }, new VideojuegosViewModel(nuevo));
         }
-        //El frombody indica que el objeto viene en el cuerpo de la petición, del mismo JSON de la petición de Angular
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] VideojuegosViewModel vm)
+        public IActionResult Update(int id, VideojuegosViewModel vm)
         {
             var actualizado = _service.Update(id, vm.ToModel());
-            if (!actualizado) return NotFound();
+            if (actualizado == null) return NotFound();
 
-            return NoContent();
+            return Ok(new VideojuegosViewModel(actualizado));
         }
+
+
+
 
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)

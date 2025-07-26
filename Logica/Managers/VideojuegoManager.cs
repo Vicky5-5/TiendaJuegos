@@ -69,7 +69,6 @@ namespace Logica.Managers
             }
         }
 
-
         public static List<Videojuego> ListarVideojuegos()
         {
             using (var cn = new Conexion())

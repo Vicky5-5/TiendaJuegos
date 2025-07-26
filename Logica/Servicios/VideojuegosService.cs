@@ -19,10 +19,25 @@ public class VideojuegosService : IVideojuegoService
         return VideojuegoManager.GuardarVideojuegos(juego.idVideojuego, juego.Titulo, juego.Genero, juego.Plataforma, juego.PEGI);
     }
 
-    public bool Update(int id, Videojuego juego)
+    public Videojuego Update(int id, Videojuego juego)
     {
-        var actualizado = VideojuegoManager.GuardarVideojuegos(id, juego.Titulo, juego.Genero, juego.Plataforma, juego.PEGI);
-        return actualizado != null;
+        try
+        {
+            var actualizado = VideojuegoManager.GuardarVideojuegos(
+                id,
+                juego.Titulo,
+                juego.Genero,
+                juego.Plataforma,
+                juego.PEGI
+            );
+
+            return actualizado;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al actualizar videojuego: {ex.Message}");
+            return null;
+        }
     }
 
     public bool Delete(int id)
