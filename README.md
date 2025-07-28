@@ -12,4 +12,4 @@ Permite a los usuarios comprar fruta fresca y que se la envíen a casa, creando 
 
 ## 🚀 Instalación
 
-gti-clone https://github.com/Vicky5-5/TiendaJuegos
+git-clone https://github.com/Vicky5-5/TiendaJuegos
